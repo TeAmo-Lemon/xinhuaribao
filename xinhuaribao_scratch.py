@@ -96,7 +96,7 @@ async def get_papers(url, date):
 async def main():
     global session
     async with aiohttp.ClientSession() as session:  # 在这里创建session
-        start_date = datetime(2024, 10, 27)
+        start_date = datetime(2022, 1, 1)
         end_date = datetime(2024, 10, 11)
         current_date = start_date
 
