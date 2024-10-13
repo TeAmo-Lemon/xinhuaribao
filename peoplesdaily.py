@@ -8,6 +8,7 @@ import re
 import aiofiles  # 用于异步文件操作
 from datetime import datetime, timedelta
 
+# 并发数量 建议不要改太高
 CONCURRENCY = 4
 BASE_URL = 'http://paper.people.com.cn/rmrb/html/'
 semaphore = asyncio.Semaphore(CONCURRENCY)
@@ -27,8 +28,8 @@ async def scrape_api(url):
             except Exception as e:
                 print(f"Error fetching {url}: {e}")
             if attempt < retries - 1:
-                print(f"Retrying {url} in 5 seconds...")
-                await asyncio.sleep(5)  # 等待20秒再重试
+                print(f"Retrying {url} in 10 seconds...")
+                await asyncio.sleep(10)  # 等待10秒再重试
         log_failure(url)  # 记录失败的请求
         return None
 
@@ -135,7 +136,7 @@ async def main():
                                   paper_urls]
             await asyncio.gather(*scrape_index_tasks)
             current_date += timedelta(days=3)
-            await asyncio.sleep(1)  # 模拟延迟
+            await asyncio.sleep(2)  # 模拟延迟 建议不要删掉
 
 
 if __name__ == '__main__':
